@@ -37,14 +37,16 @@ Se vai botar açucar então foda-se faz aí de qualquer jeito mesmo.
   end
 
   def test_🖕
+    # sim, tô ligado que isso não é como se testa algo random
     xingamentos = [
       "é o teu",
       "sai daí porra",
       "vai tu",
-      "_|_",
+      "__|__",
       "👉👌"
     ]
 
     assert xingamentos.include? @cafe.handle("🖕")
+    assert xingamentos.include? @cafe.handle(":middle_finger:")
   end
 end

@@ -37,12 +37,13 @@ Se vai botar açucar então foda-se faz aí de qualquer jeito mesmo.
     RECEITA
   end
 
+  define_method(':middle_finger:') do 🖕 end
   def 🖕
     [
       "é o teu",
       "sai daí porra",
       "vai tu",
-      "_|_",
+      "__|__",
       "👉👌"
     ].sample
   end
