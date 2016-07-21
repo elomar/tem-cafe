@@ -12,6 +12,7 @@ post '/' do
 	response = @cafe.handle(params['text'])
 	settings.cache.set(params['team_id'], @cafe)
 
+  content_type "application/json"
 	{
 			"response_type": "in_channel",
 			"text": response
