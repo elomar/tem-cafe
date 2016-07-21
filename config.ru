@@ -8,7 +8,7 @@ set :cache, Dalli::Client.new(ENV["MEMCACHIER_SERVERS"],
                    :password => ENV["MEMCACHIER_PASSWORD"]})
 
 post '/' do
-	@cafe = settings.cache.get(params['team_id']) || Cafe.new
+	@cafe = settings.cache.get(params['channel_id']) || Cafe.new
 	response = @cafe.handle(params['text'])
 	settings.cache.set(params['team_id'], @cafe)
 
