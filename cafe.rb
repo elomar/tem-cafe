@@ -13,9 +13,9 @@ class Cafe
   def tem?; tem; end
   def tem
     if @feito_em
-      "Tem :) Feito as #{@feito_em.strftime("%H:%m")}"
+      "Tem :) Feito as #{@feito_em.strftime("%H:%M")}"
     elsif @cabou_em
-      "Não :( Cabou as #{@cabou_em.strftime("%H:%m")}"
+      "Não :( Cabou as #{@cabou_em.strftime("%H:%M")}"
     else
       "Ixi, nem sei. Veja e me diga"
     end

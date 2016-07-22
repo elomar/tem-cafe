@@ -7,7 +7,7 @@ class CafeTest < Minitest::Test
   end
 
   def test_quando_fiz_tem
-    time = Time.now.strftime("%H:%m")
+    time = Time.now.strftime("%H:%M")
 
     assert_equal "Opa, café tá pronto!", @cafe.handle(:fiz)
     assert @cafe.handle(:tem).include? time
@@ -15,7 +15,7 @@ class CafeTest < Minitest::Test
   end
 
   def test_quando_cabou_nao_tem
-    time = Time.now.strftime("%H:%m")
+    time = Time.now.strftime("%H:%M")
 
     assert_equal "Ih, cabou café :(", @cafe.handle(:cabou)
     assert_equal "Ih, cabou café :(", @cafe.handle(:cabo)
