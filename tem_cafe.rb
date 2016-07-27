@@ -15,7 +15,7 @@ class TemCafe < Sinatra::Base
     halt 401, "Opa, também não é assim" unless params['token'] == settings.token
   end
 
-  error do
+  error StandardError do
     halt 500, "Ih, deu ruim"
   end
 
