@@ -22,4 +22,9 @@ class TemCafeTest < Minitest::Test
     post '/', channel_id: "channel-id", text: "tem", token: ENV["SLACK_TOKEN"]
     assert last_response.status == 200
   end
+
+  def test_nao_permite_metodos_fora_da_whitelist
+    post '/', channel_id: "channel-id", text: "object_id", token: ENV["SLACK_TOKEN"]
+    assert last_response.status == 500
+  end
 end

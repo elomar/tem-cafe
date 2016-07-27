@@ -2,7 +2,8 @@ class Cafe
   WHITELIST = %i(fiz tem? tem cabou cabo comofaz :middle_finger: 🖕).freeze
 
   def handle(action)
-    send(action) if WHITELIST.include? action.to_sym
+    fail ArgumentError, action unless WHITELIST.include? action.to_sym
+    send(action)
   end
 
   def fiz

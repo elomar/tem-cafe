@@ -50,6 +50,6 @@ Se vai botar açucar então foda-se faz aí de qualquer jeito mesmo.
   end
 
   def test_whitelist
-    assert_nil @cafe.handle('object_id')
+    assert_raises(ArgumentError) { @cafe.handle('object_id') }
   end
 end
