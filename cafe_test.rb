@@ -9,21 +9,21 @@ class CafeTest < Minitest::Test
   def test_quando_fiz_tem
     time = Time.now.strftime("%H:%M")
 
-    assert_equal "Opa, café tá pronto!", @cafe.handle(:fiz)
-    assert @cafe.handle(:tem).include? time
-    assert @cafe.handle(:tem?).include? time
+    assert_equal "Opa, café tá pronto!", @cafe.fiz
+    assert @cafe.tem.include? time
+    assert @cafe.tem?.include? time
   end
 
   def test_quando_cabou_nao_tem
     time = Time.now.strftime("%H:%M")
 
-    assert_equal "Ih, cabou café :(", @cafe.handle(:cabou)
-    assert_equal "Ih, cabou café :(", @cafe.handle(:cabo)
-    assert @cafe.handle(:tem).include? time
+    assert_equal "Ih, cabou café :(", @cafe.cabou
+    assert_equal "Ih, cabou café :(", @cafe.cabo
+    assert @cafe.tem.include? time
   end
 
   def test_quando_nao_sabe_nao_sabe
-    assert_equal "Ixi, nem sei. Veja e me diga", @cafe.handle(:tem)
+    assert_equal "Ixi, nem sei. Veja e me diga", @cafe.tem
   end
 
   def test_comofaz
@@ -33,7 +33,7 @@ Pra um café mais fraco estilo 'murica, 1 colher bem cheia pra cada 5 xícaras.
 Se vai botar açucar então foda-se faz aí de qualquer jeito mesmo.
     RECEITA
 
-    assert_equal receita, @cafe.handle(:comofaz)
+    assert_equal receita, @cafe.comofaz
   end
 
   def test_🖕
@@ -45,11 +45,7 @@ Se vai botar açucar então foda-se faz aí de qualquer jeito mesmo.
       "__|__",
       "👉👌"
     ]
-    assert xingamentos.include? @cafe.handle("🖕")
-    assert xingamentos.include? @cafe.handle(":middle_finger:")
-  end
-
-  def test_whitelist
-    assert_raises(ArgumentError) { @cafe.handle('object_id') }
+    assert xingamentos.include? @cafe.public_send("🖕")
+    assert xingamentos.include? @cafe.public_send(":middle_finger:")
   end
 end

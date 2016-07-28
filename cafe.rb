@@ -1,11 +1,4 @@
 class Cafe
-  WHITELIST = %i(fiz tem? tem cabou cabo comofaz :middle_finger: 🖕).freeze
-
-  def handle(action)
-    fail ArgumentError, action unless WHITELIST.include? action.to_sym
-    send(action)
-  end
-
   def fiz
     @cabou_em = nil
     @feito_em = Time.now
