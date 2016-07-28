@@ -1,5 +1,5 @@
 class Cafe
-  WHITELIST = %i(fiz tem? tem cabou cabo comofaz :middle_finger: 🖕).freeze
+  WHITELIST = %i(fiz tem? tem cabou cabo caboquejo comofaz :middle_finger: 🖕).freeze
 
   def handle(action)
     fail ArgumentError, action unless WHITELIST.include? action.to_sym
@@ -30,6 +30,10 @@ class Cafe
     @cabou_em = Time.now
 
     "Ih, cabou café :("
+  end
+
+  def caboquejo
+    ["CARACA :O", "alguém levou pra casa só pode"].sample
   end
 
   def comofaz
