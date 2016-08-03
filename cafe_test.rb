@@ -6,12 +6,31 @@ class CafeTest < Minitest::Test
     @cafe = Cafe.new
   end
 
-  def test_quando_fiz_tem
-    time = Time.now.strftime("%H:%M")
+  def test_quando_fizer_ta_pronto
+    time = nil
 
-    assert_equal "Opa, café tá pronto!", @cafe.handle(:fiz)
+    Time.stub :now, Time.at(0) do 
+      time = Time.now.strftime("%H:%M")
+      respostas = [
+        "Opa, café tá fazendo!",
+        "papai gosta, papai"
+      ]
+
+      assert respostas.include? @cafe.handle(:fiz)
+    end
+
     assert @cafe.handle(:tem).include? time
     assert @cafe.handle(:tem?).include? time
+  end
+
+  def test_quando_fiz_ta_fazendo
+    respostas = [
+      "Opa, café tá fazendo!",
+      "papai gosta, papai"
+    ]
+
+    assert respostas.include? @cafe.handle(:fiz)
+    assert_equal "Fazendo...", @cafe.handle(:tem)
   end
 
   def test_quando_cabou_nao_tem
