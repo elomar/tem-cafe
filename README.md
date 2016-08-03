@@ -28,9 +28,9 @@ pra avisar que acabou o café
 manda pr aí. tá faltando:
 
 - testes
-- fazendo (ideia: diz 'fazendo' por x minutos depois do /cafe fiz)
+- ~~fazendo (ideia: diz 'fazendo' por x minutos depois do /cafe fiz)~~ valeu [@andrezacm](http://github.com/andrezacm)
 - botão ~deploy no heroku~
 - um deploy funcionar pra vários times
 - dar um jeito no heroku botando pra dormir (acorda a cada hora durante expediente?)
-- um whitelist de métodos no lugar de send (/cafe object_id funciona)
+- ~~um whitelist de métodos no lugar de send (/cafe object_id funciona)~~ valeu [@thiagoa](http://github.com/thiagoa) e [@iagomoreira](http://github.com/iagomoreira)
 - e mais e mais coisa.
