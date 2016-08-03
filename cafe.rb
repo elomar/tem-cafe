@@ -1,10 +1,5 @@
 class Cafe
-  WHITELIST = %i(fiz tem? tem cabou cabo caboquejo comofaz :middle_finger: 🖕).freeze
-
-  def handle(action)
-    fail ArgumentError, action unless WHITELIST.include? action.to_sym
-    send(action)
-  end
+  DEMORA_MAIS_OU_MENOS = 4
 
   def fiz
     @cabou_em = nil
@@ -67,6 +62,6 @@ Se vai botar açucar então foda-se faz aí de qualquer jeito mesmo.
   end
 
   def fazendo?
-    feito_a_quanto_tempo < 4
+    feito_a_quanto_tempo < DEMORA_MAIS_OU_MENOS
   end
 end
