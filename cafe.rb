@@ -13,7 +13,10 @@ class Cafe
 
   def tem?; tem; end
   def tem
-    if @feito_em && fazendo?
+    if @feito_em && !feito_hoje?
+      cabou
+      "Não, já era boy :( Alguém tem que fazer o de hoje"
+    elsif @feito_em && fazendo?
       "Fazendo..."
     elsif @feito_em
       "Tem :) Feito as #{@feito_em.strftime("%H:%M")}"
@@ -22,6 +25,10 @@ class Cafe
     else
       "Ixi, nem sei. Veja e me diga"
     end
+  end
+
+  private def feito_hoje?
+    Time.now.to_a.slice(4, 3) == @feito_em.to_a.slice(4, 3)
   end
 
   def cabou; cabo; end

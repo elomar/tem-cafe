@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'timecop'
 require './cafe'
 
 class CafeTest < Minitest::Test
@@ -6,11 +7,10 @@ class CafeTest < Minitest::Test
     @cafe = Cafe.new
   end
 
-  def test_quando_fizer_ta_pronto
-    time = nil
+  def test_quando_fiz_ta_fazendo_e_demora_4_minutos
+    agora = Time.now
 
-    Time.stub :now, Time.at(0) do
-      time = Time.now.strftime("%H:%M")
+    Timecop.freeze agora do
       respostas = [
         "Opa, café tá fazendo!",
         "papai gosta, papai"
@@ -19,18 +19,37 @@ class CafeTest < Minitest::Test
       assert respostas.include? @cafe.fiz
     end
 
-    assert @cafe.tem.include? time
-    assert @cafe.tem?.include? time
+    tres_minutos_no_futuro = agora + (3 * 60)
+
+    Timecop.freeze tres_minutos_no_futuro do
+      assert_equal "Fazendo...", @cafe.tem
+    end
   end
 
-  def test_quando_fiz_ta_fazendo
-    respostas = [
-      "Opa, café tá fazendo!",
-      "papai gosta, papai"
-    ]
+  def test_quando_fiz_ta_pronto_depois_de_4_minutos
+    agora = Time.now
 
-    assert respostas.include? @cafe.fiz
-    assert_equal "Fazendo...", @cafe.tem
+    Timecop.freeze(agora) { @cafe.fiz }
+
+    quatro_minutos_no_futuro = agora + (4 * 60)
+
+    Timecop.freeze quatro_minutos_no_futuro do
+      assert @cafe.tem.include? agora.strftime('%H:%M')
+      assert @cafe.tem?.include? agora.strftime('%H:%M')
+    end
+  end
+
+  def test_quando_fiz_tem_se_for_no_mesmo_dia
+    agora = Time.new(2016, 8, 1)
+
+    Timecop.freeze(agora) { @cafe.fiz }
+
+    fim_do_dia = Time.new(2016, 8, 1, 23, 59, 59)
+
+    Timecop.freeze fim_do_dia do
+      assert @cafe.tem.include? agora.strftime('%H:%M')
+      assert @cafe.tem?.include? agora.strftime('%H:%M')
+    end
   end
 
   def test_quando_cabou_nao_tem
@@ -39,6 +58,42 @@ class CafeTest < Minitest::Test
     assert_equal "Ih, cabou café :(", @cafe.cabou
     assert_equal "Ih, cabou café :(", @cafe.cabo
     assert @cafe.tem.include? time
+  end
+
+  def test_quando_fez_ontem_nao_tem
+    ontem = Time.new(2016, 8, 1)
+
+    Timecop.freeze(ontem) { @cafe.fiz }
+
+    hoje = Time.new(2016, 8, 2)
+
+    Timecop.freeze hoje do
+      assert_match(/Não, já era/, @cafe.tem?)
+    end
+  end
+
+  def test_quando_fez_mes_passado_no_mesmo_dia_nao_tem
+    mes_passado = Time.new(2016, 7, 1)
+
+    Timecop.freeze(mes_passado) { @cafe.fiz }
+
+    esse_mes_no_mesmo_dia = Time.new(2016, 8, 1)
+
+    Timecop.freeze esse_mes_no_mesmo_dia do
+      assert_match(/Não, já era/, @cafe.tem?)
+    end
+  end
+
+  def test_quando_fez_ano_passado_no_mesmo_mes_e_dia_nao_tem
+    ano_passado = Time.new(2015, 8, 1)
+
+    Timecop.freeze(ano_passado) { @cafe.fiz }
+
+    esse_ano_no_mesmo_dia_e_mes = Time.new(2016, 8, 1)
+
+    Timecop.freeze esse_ano_no_mesmo_dia_e_mes do
+      assert_match(/Não, já era/, @cafe.tem?)
+    end
   end
 
   def test_quando_nao_sabe_nao_sabe
