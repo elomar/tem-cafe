@@ -1,5 +1,6 @@
 class Cafe
   DEMORA_MAIS_OU_MENOS = 4
+  QUATRO_HORAS = 3_600 * 4
 
   def fiz
     @cabou_em = nil
@@ -18,8 +19,10 @@ class Cafe
       "Não, já era boy :( Alguém tem que fazer o de hoje"
     elsif @feito_em && fazendo?
       "Fazendo..."
-    elsif @feito_em
+    elsif @feito_em && !velho?
       "Tem :) Feito as #{@feito_em.strftime("%H:%M")}"
+    elsif @feito_em && velho?
+      "Tem mas tá velho, feito em #{@feito_em.strftime("%H:%M")} :( Vai lá e faz teu nome"
     elsif @cabou_em
       "Não :( Cabou as #{@cabou_em.strftime("%H:%M")}"
     else
@@ -29,6 +32,10 @@ class Cafe
 
   private def feito_hoje?
     Time.now.to_a.slice(4, 3) == @feito_em.to_a.slice(4, 3)
+  end
+
+  private def velho?
+    (Time.now - @feito_em) >= QUATRO_HORAS
   end
 
   def cabou; cabo; end

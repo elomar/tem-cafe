@@ -44,11 +44,24 @@ class CafeTest < Minitest::Test
 
     Timecop.freeze(agora) { @cafe.fiz }
 
-    fim_do_dia = Time.new(2016, 8, 1, 23, 59, 59)
+    fim_do_dia = Time.new(2016, 8, 1, 3, 59, 59)
 
     Timecop.freeze fim_do_dia do
       assert @cafe.tem.include? agora.strftime('%H:%M')
       assert @cafe.tem?.include? agora.strftime('%H:%M')
+      refute_includes(@cafe.tem?, 'velho')
+    end
+  end
+
+  def test_tem_mas_ta_velho_depois_de_4_horas
+    agora = Time.new(2016, 8, 1)
+
+    Timecop.freeze(agora) { @cafe.fiz }
+
+    quatro_horas_depois = Time.new(2016, 8, 1, 4, 1, 0)
+
+    Timecop.freeze quatro_horas_depois do
+      assert_includes(@cafe.tem?, 'velho')
     end
   end
 
