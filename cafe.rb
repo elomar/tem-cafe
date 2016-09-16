@@ -16,7 +16,7 @@ class Cafe
   def tem
     if @feito_em && !feito_hoje?
       cabou
-      "Não, já era boy :( Alguém tem que fazer o de hoje"
+      "Não :( Alguém tem que fazer o de hoje"
     elsif @feito_em && fazendo?
       "Fazendo..."
     elsif @feito_em && !velho?
@@ -24,14 +24,26 @@ class Cafe
     elsif @feito_em && velho?
       "Tem mas tá velho, feito em #{@feito_em.strftime("%H:%M")} :( Vai lá e faz teu nome"
     elsif @cabou_em
-      "Não :( Cabou as #{@cabou_em.strftime("%H:%M")}"
+      if cabou_hoje?
+        "Não :( Cabou as #{@cabou_em.strftime("%H:%M")}"
+      else
+        "Não :( Alguém tem que fazer o de hoje"
+      end
     else
       "Ixi, nem sei. Veja e me diga"
     end
   end
 
   private def feito_hoje?
-    Time.now.to_a.slice(4, 3) == @feito_em.to_a.slice(4, 3)
+    hoje?(@feito_em)
+  end
+
+  private def cabou_hoje?
+    hoje?(@cabou_em)
+  end
+
+  private def hoje?(time)
+    Time.now.to_a.slice(4, 3) == time.to_a.slice(4, 3)
   end
 
   private def velho?

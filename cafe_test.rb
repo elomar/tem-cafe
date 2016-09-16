@@ -81,7 +81,22 @@ class CafeTest < Minitest::Test
     hoje = Time.new(2016, 8, 2)
 
     Timecop.freeze hoje do
-      assert_match(/Não, já era/, @cafe.tem?)
+      assert_match(/Não :\(/, @cafe.tem?)
+    end
+  end
+
+  def test_quando_cabou_ontem_alguem_tem_que_fazer_o_de_hoje
+    ontem = Time.new(2016, 9, 9)
+
+    Timecop.freeze(ontem) do
+      @cafe.fiz
+      @cafe.cabou
+    end
+
+    hoje = Time.new(2016, 9, 10)
+
+    Timecop.freeze hoje do
+      assert_match(/Não :\(/, @cafe.tem?)
     end
   end
 
@@ -93,7 +108,7 @@ class CafeTest < Minitest::Test
     esse_mes_no_mesmo_dia = Time.new(2016, 8, 1)
 
     Timecop.freeze esse_mes_no_mesmo_dia do
-      assert_match(/Não, já era/, @cafe.tem?)
+      assert_match(/Não :\(/, @cafe.tem?)
     end
   end
 
@@ -105,7 +120,7 @@ class CafeTest < Minitest::Test
     esse_ano_no_mesmo_dia_e_mes = Time.new(2016, 8, 1)
 
     Timecop.freeze esse_ano_no_mesmo_dia_e_mes do
-      assert_match(/Não, já era/, @cafe.tem?)
+      assert_match(/Não :\(/, @cafe.tem?)
     end
   end
 
