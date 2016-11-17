@@ -7,7 +7,7 @@ require_relative 'command_parser'
 
 class TemCafe < Sinatra::Base
   COMMAND_PARSER = CommandParser.new(
-    whitelist: %i(fiz tem? tem cabou cabo comofaz :middle_finger: 🖕)
+    whitelist: %i(fiz tem? tem cabou cabo comofaz :middle_finger: 🖕 caboquejo)
   )
 
   set :cache, Dalli::Client.new(ENV["MEMCACHIER_SERVERS"],
